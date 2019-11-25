@@ -47,4 +47,36 @@ class BeerController extends FOSRestController
         ], $status);
     }
 
+    /**
+     * Lists Beer by id.
+     * @Rest\Get("/beer/detail")
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function getBeerDetailByIdAction(Request $request): Response
+    {
+
+        $id = $request->get('id') ? $request->get('id') : '';
+        $newBeer=[];
+        $status = Response::HTTP_NOT_FOUND ;
+
+        if ('' !== $id) {
+            $punkApi = PunkApi::create();
+
+            try {
+                $beerById = $punkApi->getBeerById($id);
+                if (count($beerById) > 0) {
+                    $newBeer = new ValueObjects\BeerDetail($beerById[0]);
+                }
+                $status = Response::HTTP_OK;
+            } catch (RequestException $exception) {
+                $status = Response::HTTP_NOT_FOUND;
+            }
+        }
+
+        return $this->json([
+            'beer' => $newBeer,
+        ], $status);
+    }
 }
