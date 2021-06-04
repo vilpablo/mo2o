@@ -1,7 +1,4 @@
 {
-    "billythekid/punk-api": {
-        "version": "1.1.2"
-    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -36,13 +33,13 @@
         ]
     },
     "guzzlehttp/guzzle": {
-        "version": "6.4.1"
+        "version": "5.3.4"
     },
-    "guzzlehttp/promises": {
-        "version": "v1.3.1"
+    "guzzlehttp/ringphp": {
+        "version": "1.1.1"
     },
-    "guzzlehttp/psr7": {
-        "version": "1.6.1"
+    "guzzlehttp/streams": {
+        "version": "3.0.0"
     },
     "hoa/compiler": {
         "version": "3.17.08.08"
@@ -172,14 +169,11 @@
     "psr/container": {
         "version": "1.0.0"
     },
-    "psr/http-message": {
-        "version": "1.0.1"
-    },
     "psr/log": {
         "version": "1.1.2"
     },
-    "ralouphie/getallheaders": {
-        "version": "3.0.3"
+    "react/promise": {
+        "version": "v2.8.0"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"

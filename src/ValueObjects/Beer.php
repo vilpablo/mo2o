@@ -21,9 +21,9 @@ class Beer
      */
     public function __construct($beerCrud)
     {
-        $this->id = $beerCrud->id;
-        $this->nombre = $beerCrud->name;
-        $this->descripcion = $beerCrud->description;
+        $this->id = $beerCrud['id'];
+        $this->nombre = $beerCrud['name'];
+        $this->descripcion = $beerCrud['description'];
     }
 
     /**
