@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Controller\Annotations as Rest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use billythekid\PunkApi;
 use App\ValueObjects;
 
@@ -16,11 +15,11 @@ use App\ValueObjects;
  * @Route("/api", name="api_")
  */
 
-class BeerController extends FOSRestController
+class BeerController extends AbstractFOSRestController
 {
     /**
      * Lists Beer by food.
-     * @Rest\Get("/beer")
+     * @Route("/beer", methods={"GET"})
      * @param Request $request
      *
      * @return Response
@@ -49,7 +48,7 @@ class BeerController extends FOSRestController
 
     /**
      * Lists Beer by id.
-     * @Rest\Get("/beer/detail")
+     * @Route("/beer/detail", methods={"GET"})
      * @param Request $request
      *
      * @return Response

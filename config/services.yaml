@@ -5,6 +5,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
 
+fos_rest:
+    routing_loader: false
+
 services:
     # default configuration for services in *this* file
     _defaults:
