@@ -28,9 +28,9 @@ class BeerDetail extends Beer
     public function __construct($beerCrud)
     {
         parent::__construct($beerCrud);
-        $this->imagen = $beerCrud->image_url;
-        $this->slogan = $beerCrud->tagline;
-        $this->fechaFabricacion = \DateTime::createFromFormat('m/Y', $beerCrud->first_brewed);
+        $this->imagen = $beerCrud['image_url'];
+        $this->slogan = $beerCrud['tagline'];
+        $this->fechaFabricacion = \DateTime::createFromFormat('m/Y', $beerCrud['first_brewed']);
     }
 
     /**

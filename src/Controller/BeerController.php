@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,9 @@ use App\ValueObjects;
 
 class BeerController extends AbstractFOSRestController
 {
+    /** @var string  */
+    private const API_URL = 'https://api.punkapi.com/v2/beers/';
+
     /**
      * Lists Beer by food.
      * @Route("/beer", methods={"GET"})
@@ -31,9 +35,8 @@ class BeerController extends AbstractFOSRestController
         $status = Response::HTTP_NOT_FOUND ;
 
         if ('' !== $food) {
-            $punkApi = PunkApi::create();
-            $beersByFood = $punkApi->food($food)->getBeers();
-
+            $client = new Client();
+            $beersByFood = $client->get($this::API_URL.'?food='.$food);
             foreach ($beersByFood as $beer) {
                 $newBeer = new ValueObjects\Beer($beer);
                 $result[] = $newBeer;
@@ -61,21 +64,23 @@ class BeerController extends AbstractFOSRestController
         $status = Response::HTTP_NOT_FOUND ;
 
         if ('' !== $id) {
-            $punkApi = PunkApi::create();
-
+            $client = new Client();
+            $newBeers = [];
             try {
-                $beerById = $punkApi->getBeerById($id);
-                if (count($beerById) > 0) {
-                    $newBeer = new ValueObjects\BeerDetail($beerById[0]);
+                /** @var \GuzzleHttp\Message\Response $beerById */
+                $beerById = $client->get($this::API_URL.'?ids='.$id);
+                $jsonBeers = json_decode($beerById->getBody()->getContents(), true);
+                if(200 === $beerById->getStatusCode() && !empty($jsonBeers)){
+                    $newBeer = new ValueObjects\BeerDetail($jsonBeers[0]);
+                    $status = Response::HTTP_OK;
                 }
-                $status = Response::HTTP_OK;
             } catch (RequestException $exception) {
                 $status = Response::HTTP_NOT_FOUND;
             }
         }
 
         return $this->json([
-            'beer' => $newBeer,
+                'beer' => $newBeer,
         ], $status);
     }
 }
